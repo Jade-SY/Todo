@@ -15,3 +15,11 @@ export default {
   }),
 };
 </script>
+<style lang="scss">
+#app{
+  background:linear-gradient(to top, #30cfd0 0%, #330867 100%);
+  color:#fafafa;
+  padding:30px;
+}
+
+</style>

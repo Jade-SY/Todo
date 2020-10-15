@@ -24,4 +24,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+header{
+  width:50%;
+}
+</style>
