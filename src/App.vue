@@ -19,7 +19,10 @@ export default {
 #app{
   background:linear-gradient(to top, #30cfd0 0%, #330867 100%);
   color:#fafafa;
-  padding:30px;
+  padding:20px;
+  min-width: 350px;
+  max-width: 480px;
+  margin:0 auto;
 }
 
 </style>
