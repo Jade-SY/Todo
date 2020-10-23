@@ -19,15 +19,29 @@
           <v-row
             align="center"
             class="list-item"
-            v-for="(todo, i) in todos"
+            v-for="(todo, i) in filteredTodos"
             :key="i"
+            @mouseover="todo.isMouseOver = true"
+            @mouseleave="todo.isMouseOver = false"
           >
-            <div class="circle">
-              <v-btn icon color="green"><v-icon>mdi-check</v-icon></v-btn>
+            <div
+              :class="{ 'green-border': todo.complete }"
+              class="circle"
+              @click="editTask(todo)"
+            >
+              <!-- <div :class="{ 'green-border': todo.complete }"> 
+              클래스 바인딩 방법
+            <div :style="{ border: (todo.complete ? '1px solid green' : '')}">
+              인라인스타일 바인딩 방법 -->
+              <v-btn icon color="green" v-show="todo.complete"
+                ><v-icon>mdi-check</v-icon></v-btn
+              >
             </div>
-            <p>{{ todo.title }}</p>
+            <p :class="{ 'text-complete': todo.complete }">{{ todo.title }}</p>
             <v-spacer></v-spacer>
-            <v-btn icon @click="deleteTodo"><v-icon>mdi-close</v-icon></v-btn>
+            <v-btn icon @click="deleteTodo(todo)"
+              ><v-icon>mdi-close</v-icon></v-btn
+            >
           </v-row>
         </div>
         <v-divider></v-divider>
@@ -41,7 +55,7 @@
           <v-spacer></v-spacer>
           <v-btn text small outlined>All</v-btn>
           <v-btn text small>Active</v-btn>
-          <v-btn text small>Completed</v-btn>
+          <v-btn text small @click="findComplete">Completed</v-btn>
           <v-spacer></v-spacer>
         </v-row>
       </v-card>
@@ -51,6 +65,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import _ from 'lodash';
 export default {
   name: 'Home',
   components: {},
@@ -66,11 +81,30 @@ export default {
         complete: false,
         title: this.newTitle,
       });
+      this.newTitle = '';
     },
-    deleteTodo() {},
+    editTask(task) {
+      task.complete = !task.complete;
+      this.$store.commit('editTask', task);
+    },
+    deleteTodo(task) {
+      this.$store.commit('deleteTodo', task);
+    },
+    findComplete() {
+      this.filteredTodos.filter((todo) => todo.complete == true);
+    },
   },
   computed: {
     ...mapState(['todos']),
+    filteredTodos() {
+      // todos의 데이터를 직접 건드리면 안되기때문에 lodash문법을 이용하여
+      // clone이라는 todos의 복제데이터 생성
+      let clone = _.cloneDeep(this.todos);
+      return clone.map((el) => {
+        el['isMouseOver'] = false;
+        return el;
+      });
+    },
     newId() {
       return (
         this.todos.reduce((acc, cur) => {
@@ -95,6 +129,7 @@ export default {
     text-align: center;
   }
 }
+
 p {
   margin: 0 !important;
 }
@@ -103,15 +138,25 @@ p {
 }
 .list-item {
   padding: 10px 16px;
-}
-.circle {
-  width: 35px;
-  height: 35px;
-  margin-right: 20px;
-  border-radius: 50%;
-  border: 1px solid #ddd;
-}
 
+  .circle {
+    width: 35px;
+    height: 35px;
+    margin-right: 20px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+  }
+  .green-border {
+    border: 1px solid green;
+  }
+}
+.text-complete {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+.complete {
+  color: #ddd;
+}
 .todo-footer-extension {
   position: relative;
   left: 0;
