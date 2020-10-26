@@ -3,7 +3,7 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     todos: [{
         id: 0,
@@ -33,9 +33,18 @@ export default new Vuex.Store({
       // let targetTask = state.todos.find(el => el.id == payload.id)
       // let deleteIndex = state.todos.indexOf(targetTask)
       // state.todos.splice(deleteIndex, 1)
+    },
+    initializeStore(state) {
+      if (localStorage.getItem('store')) {
+        this.replaceState(Object.assign(state, JSON.parse(localStorage.getItem('store'))))
+      }
     }
 
   },
   actions: {},
   modules: {}
 });
+store.subscribe((mutation, state) => {
+  localStorage.setItem('store', JSON.stringify(state))
+})
+export default store

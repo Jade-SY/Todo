@@ -51,12 +51,27 @@
           align="center"
           no-gutters
         >
-          <p>{{ todos.length }} items left</p>
+          <p>{{ filteredTodos.length }} items left</p>
           <v-spacer></v-spacer>
-          <v-btn text small outlined>All</v-btn>
-          <v-btn text small>Active</v-btn>
-          <v-btn text small @click="findComplete">Completed</v-btn>
+          <v-btn text small :outlined="filter === 'all'" @click="filter = 'all'"
+            >All</v-btn
+          >
+          <v-btn
+            text
+            small
+            :outlined="filter === 'active'"
+            @click="filter = 'active'"
+            >Active</v-btn
+          >
+          <v-btn
+            text
+            small
+            :outlined="filter === 'completed'"
+            @click="filter = 'completed'"
+            >Completed</v-btn
+          >
           <v-spacer></v-spacer>
+          <v-btn text small @click="filter = 'completed'">Clear</v-btn>
         </v-row>
       </v-card>
     </div>
@@ -65,13 +80,13 @@
 
 <script>
 import { mapState } from 'vuex';
-import _ from 'lodash';
 export default {
   name: 'Home',
   components: {},
   data() {
     return {
       newTitle: '',
+      filter: '',
     };
   },
   methods: {
@@ -90,20 +105,18 @@ export default {
     deleteTodo(task) {
       this.$store.commit('deleteTodo', task);
     },
-    findComplete() {
-      this.filteredTodos.filter((todo) => todo.complete == true);
-    },
   },
   computed: {
     ...mapState(['todos']),
     filteredTodos() {
-      // todos의 데이터를 직접 건드리면 안되기때문에 lodash문법을 이용하여
-      // clone이라는 todos의 복제데이터 생성
-      let clone = _.cloneDeep(this.todos);
-      return clone.map((el) => {
-        el['isMouseOver'] = false;
-        return el;
-      });
+      switch (this.filter) {
+        case 'active':
+          return this.todos.filter((el) => !el.complete);
+        case 'completed':
+          return this.todos.filter((el) => el.complete);
+        default:
+          return this.todos;
+      }
     },
     newId() {
       return (
