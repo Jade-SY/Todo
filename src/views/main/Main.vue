@@ -1,8 +1,8 @@
 <template>
   <div>
     <todo-title></todo-title>
-    <todo-list></todo-list>
     <todo-input></todo-input>
+    <todo-list></todo-list>
     <todo-controller></todo-controller>
   </div>
 </template>
@@ -12,11 +12,15 @@ export default {
   name: 'Main',
   components: {
     TodoTitle: () => import('@/components/main/TodoTitle.vue'),
-    TodoList: () => import('@/components/main/TodoList.vue'),
     TodoInput: () => import('@/components/main/TodoInput.vue'),
+    TodoList: () => import('@/components/main/TodoList.vue'),
     TodoController: () => import('@/components/main/TodoController.vue'),
   },
+  data() {
+ 
+  },
+   methods: {
+   
+    }, 
 };
 </script>
-
-<style lang="scss" scoped></style>

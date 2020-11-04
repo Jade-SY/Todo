@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import getDate from "../../assets/js/getDate.js"
 export default {
   name: 'CoreHead',
   data() {
@@ -13,13 +14,8 @@ export default {
       currtime: '',
     };
   },
-  beforeMount() {
-    let now = new Date();
-    let month = now.getMonth() + 1;
-    let date = now.getDate();
-    let weekList = new Array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
-    let week = weekList[now.getDay()];
-    this.currtime = month + '/' + date + '/' + week;
+  created() {
+    this.currtime = getDate().month + '/' + getDate().date + '/' + getDate().week
   },
 };
 </script>
@@ -27,5 +23,12 @@ export default {
 <style lang="scss" scoped>
 header{
   width:50%;
+}
+h1{
+  font-weight: normal;
+  font-size: 1rem;
+}
+p{
+  font-size: 3rem;
 }
 </style>
