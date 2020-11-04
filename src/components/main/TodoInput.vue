@@ -2,12 +2,12 @@
     <div class="add">
         <input
             v-model="newTodoItem"
-            @keyup.enter="addTodoItem"
+            @keyup.enter="addTodo"
             type="text"
             class="add-input"
             placeholder="오늘 할 일을 입력해주세요"/>
         <v-btn
-            @click="addTodoItem"
+            @click="addTodo"
             class="add-button"
             height="45"
             max-width="45"
@@ -27,11 +27,10 @@
             return {newTodoItem: ""}
         },
         methods: {
-         addTodoItem() {
-      if (this.newTodoItem !== "") {
-        this.$emit("addItem", this.newTodoItem);
-        this.clearInput();
-      }
+         addTodo() {
+       this.$store.commit('newTodoItem')
+       this.newTodoItem = ""
+     this.newTodoItem = ""
     },
             clearInput() {
                 this.newTodoItem = ""

@@ -18,3 +18,14 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.home{
+  position: relative;
+    width:480px;
+    height: 100%;
+    padding:20px;
+  min-width: 350px;
+  margin:0 auto;
+  overflow: hidden;
+}
+</style>

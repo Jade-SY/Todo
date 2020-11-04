@@ -30,18 +30,31 @@
 
 <script>
     export default {
-      props: ['listdata'],
+      
         data() {
+            return {todoItems: []}; 
         },
          methods: {
             toggleComplete(todoItem) {
-              this.$emit('toggleItem', todoItem)
+              todoItem.completed = !todoItem.completed;
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
       removeTodo(todoItem, index) {
-        this.$emit('removeItem', todoItem, index)
+        localStorage.removeItem(todoItem.item);
+        this.listdata.splice(index, 1);
   }
   },
-      
+     created() {
+            if (localStorage.length > 0) {
+                for (let i = 0; i < localStorage.length; i++) {
+                    if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
+                        this.todoItems.push(
+                          JSON.parse(localStorage.getItem(localStorage.key(i)))
+                        );
+                    }
+                }
+            }
+        },  
     };
 </script>
 
@@ -58,6 +71,7 @@
   border-radius: 4px;
 .list-item{
   width:100%;
+  overflow: hidden;
   position: relative;
   display: flex;
   align-items: center;
@@ -85,11 +99,17 @@ input[type="checkbox"]:checked + label:before{
 }
   .text-box{
     width:100%;
-    display: flex;
+       display: flex;
     justify-content: space-between;
+    .list-text{
+      width: 280px;
+       overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 15px;
+    }
   } 
   p{
-  padding:10px 8px 10px 15px;
+  padding:10px 0;
     color: #325791;
     margin:0 !important;
   }

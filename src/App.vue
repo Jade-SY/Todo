@@ -17,12 +17,8 @@ export default {
 </script>
 <style lang="scss">
 #app{
+  height: 100vh;
   background:linear-gradient(to top, #30cfd0 0%, #330867 100%);
-  color:#fafafa;
-  padding:20px;
-  min-width: 350px;
-  max-width: 480px;
-  margin:0 auto;
+  color:#fafafa; 
 }
-
 </style>
