@@ -16,4 +16,12 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+#app {
+  background: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
+  color: #282828;
+}
+p {
+  margin: 0 !important;
+}
+</style>
