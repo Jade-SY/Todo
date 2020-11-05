@@ -8,7 +8,7 @@
       v-model="newTitle"
       @keyup.enter="addTask(id, newTitle)"
       background-color="transparent"
-      color="#333"
+      color="#66b79b"
       class="todo-input px-4"
     >
     </v-text-field>
@@ -28,6 +28,7 @@ export default {
   methods: {
     addTask(id, newTitle) {
       this.$emit('add-task', id, newTitle);
+      this.newTitle = '';
     },
   },
 };

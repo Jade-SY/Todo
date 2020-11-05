@@ -4,6 +4,7 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
+  filteredTodos: [],
   state: {
     todos: [{
         id: 0,
@@ -34,11 +35,24 @@ const store = new Vuex.Store({
       // let deleteIndex = state.todos.indexOf(targetTask)
       // state.todos.splice(deleteIndex, 1)
     },
+    filteredTodos(state, payload) {
+      switch (payload) {
+        case payload === 'active':
+          return state.todos.filter((todo) => !todo.complete);
+        case payload === 'completed':
+          return state.todos.filter((todo) => todo.complete);
+        default:
+          return state.todos;
+      }
+    },
+    clearAll(state) {
+      state.todos = []
+    },
     initializeStore(state) {
       if (localStorage.getItem('store')) {
         this.replaceState(Object.assign(state, JSON.parse(localStorage.getItem('store'))))
       }
-    }
+    },
 
   },
   actions: {},
