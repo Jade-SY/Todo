@@ -14,6 +14,7 @@ export default {
 #app {
   background: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
   color: #444;
+  min-width: 450px;
 }
 p {
   margin: 0 !important;

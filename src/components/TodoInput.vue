@@ -3,16 +3,18 @@
     <v-text-field
       label="What needs to be done?"
       persistent-hint
-      flat
+      rounded
       height="50"
       v-model="newTitle"
       @keyup.enter="addTask(id, newTitle)"
-      background-color="transparent"
+      background-color="rgba(255,255,255,0.8)"
       color="#66b79b"
-      class="todo-input px-4"
+      class="todo-input px-4 pt-8 ma-0"
     >
     </v-text-field>
-    <v-btn icon @click="addTask(is, newTitle)"><v-icon>mdi-plus</v-icon></v-btn>
+    <v-btn icon @click="addTask(is, newTitle)"
+      ><v-icon size="30">mdi-plus</v-icon></v-btn
+    >
   </div>
 </template>
 

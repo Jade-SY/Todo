@@ -11,11 +11,7 @@
         :class="{ 'green-border': todo.complete }"
         class="circle"
         @click="editTask(todo)"
-      >
-        <!-- <div :class="{ 'green-border': todo.complete }"> 
-              클래스 바인딩 방법
-            <div :style="{ border: (todo.complete ? '1px solid green' : '')}">
-              인라인스타일 바인딩 방법 -->
+      >  
         <v-btn icon x-small color="#66b79b" v-show="todo.complete"
           ><v-icon>mdi-check</v-icon></v-btn
         >

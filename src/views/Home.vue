@@ -1,7 +1,7 @@
 <template>
   <v-row class="home" justify="center">
     <div class="home-container">
-      <h1 class="logo"><img src="../assets/logo.png" width="45" alt="" /></h1>
+      <h1 class="logo">My Todo list</h1>
       <p class="date-info">{{ today }}</p>
       <p class="title-task">
         오늘 할 일
@@ -15,7 +15,9 @@
           @edit-task="editTask"
           @delete-todo="deleteTodo"
         ></todo-list>
-        <p v-if="filteredTodos.length == 0">There is no task you have to do!</p>
+        <p v-if="filteredTodos.length === 0">
+          There is no task you have to do!
+        </p>
       </v-card>
       <v-row class="mt-3" no-gutters>
         <v-menu offset-y>
@@ -24,14 +26,10 @@
               Check
             </v-btn>
           </template>
-          <v-list style="display:flex;">
-            <v-list-item text small @click="filter = 'all'">All</v-list-item>
-            <v-list-item text small @click="filter = 'active'"
-              >Active</v-list-item
-            >
-            <v-list-item text small @click="filter = 'completed'"
-              >Completed</v-list-item
-            >
+          <v-list class="ma-0 pa-1" style="display:flex;">
+            <v-list-item @click="filter = 'all'">All</v-list-item>
+            <v-list-item @click="filter = 'active'">Active</v-list-item>
+            <v-list-item @click="filter = 'completed'">Completed</v-list-item>
           </v-list>
         </v-menu>
         <v-spacer></v-spacer>
@@ -55,7 +53,6 @@ export default {
   components: {
     TodoInput: () => import('@/components/TodoInput.vue'),
     TodoList: () => import('@/components/TodoList.vue'),
-    // TodoControll: () => import('@/components/TodoControll.vue'),
   },
   data() {
     return {
@@ -126,15 +123,8 @@ export default {
   height: 100%;
   padding: 20px;
 }
-.title-wrap {
-  width: 55px;
-  height: 2rem;
-  overflow: hidden;
-  font-size: 1rem;
-  font-weight: bold;
-  background: #333;
-  color: #fff;
-  border-radius: 10px;
+.logo {
+  font-size: 16px;
 }
 .date-info {
   font-size: 2.6rem;
