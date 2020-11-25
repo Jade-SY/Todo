@@ -11,7 +11,7 @@
         :class="{ 'green-border': todo.complete }"
         class="circle"
         @click="editTask(todo)"
-      >  
+      > 
         <v-btn icon x-small color="#66b79b" v-show="todo.complete"
           ><v-icon>mdi-check</v-icon></v-btn
         >

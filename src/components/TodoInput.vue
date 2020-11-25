@@ -41,6 +41,7 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
+  height: 90px;
 }
 .todo-input {
   width: 100%;

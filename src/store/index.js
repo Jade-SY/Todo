@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    name:'',
     todos: [{
         id: 0,
         complete: false,
@@ -18,18 +19,19 @@ const store = new Vuex.Store({
     ]
   },
   mutations: {
+    setUserName(state, payload){
+      state.name = payload
+    },
     addTask(state, payload) {
       state.todos.push(payload)
     },
     editTask(state, payload) {
-      let targetTask = state.todos.find(el => el.id == payload.id)
-
+      let targetTask = state.todos.find(el => el.id == payload.id) 
       Object.assign(targetTask, payload)
     },
     deleteTodo(state, payload) {
       let targetTask = state.todos.findIndex(el => el.id == payload.id)
       state.todos.splice(targetTask, 1)
-
     },
     clearAll(state) {
       state.todos = []
@@ -44,6 +46,7 @@ const store = new Vuex.Store({
   actions: {},
   modules: {}
 });
+
 store.subscribe((mutation, state) => {
   localStorage.setItem('store', JSON.stringify(state))
 })

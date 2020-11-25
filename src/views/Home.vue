@@ -1,13 +1,15 @@
 <template>
-  <v-row class="home" justify="center">
+  <v-row class="home mt-md-10" justify="center">
     <div class="home-container">
       <h1 class="logo">My Todo list</h1>
       <p class="date-info">{{ today }}</p>
-      <p class="title-task">
+      <marquee class="greeting" scrolldelay="120">안녕하세요 <span>{{name}}</span> 님!</marquee>
+      <p class="title-task" v-if="filteredTodos.length > 0">
         오늘 할 일
         <span class="task-total">{{ filteredTodos.length }}</span
         >건 남았습니다
       </p>
+      <p class="title-task no-task mt-1" v-else>모든 할 일을 끝마치셨네요! 고생하셨어요:)</p> 
       <todo-input :id="newId" @add-task="addTask"></todo-input>
       <v-card elevation="3" class="list-wrapper">
         <todo-list
@@ -16,7 +18,8 @@
           @delete-todo="deleteTodo"
         ></todo-list>
         <p v-if="filteredTodos.length === 0">
-          There is no task you have to do!
+          There is no task you have to do.<br/>
+          Good job!
         </p>
       </v-card>
       <v-row class="mt-3" no-gutters>
@@ -42,6 +45,7 @@
           ></v-card
         >
       </v-row>
+    <todo-footer></todo-footer>
     </div>
   </v-row>
 </template>
@@ -53,6 +57,7 @@ export default {
   components: {
     TodoInput: () => import('@/components/TodoInput.vue'),
     TodoList: () => import('@/components/TodoList.vue'),
+    TodoFooter: () => import('@/components/Footer.vue'),
   },
   data() {
     return {
@@ -62,12 +67,12 @@ export default {
       isClear: false,
     };
   },
-  methods: {
+  methods: { 
     addTask(id, newTitle) {
       this.$store.commit('addTask', {
         id: id,
         complete: false,
-        title: newTitle,
+        title: newTitle
       });
       newTitle = '';
     },
@@ -84,7 +89,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(['todos']),
+    ...mapState(['name','todos']),
     filteredTodos() {
       switch (this.filter) {
         case 'active':
@@ -118,17 +123,25 @@ export default {
 </script>
 <style lang="scss" scoped>
 .home-container {
-  width: 100%;
+  width: 550px;
   max-width: 550px;
-  height: 100%;
+  height: 100vh;
   padding: 20px;
-}
-.logo {
-  font-size: 16px;
 }
 .date-info {
   font-size: 2.6rem;
   font-weight: 500;
+}
+marquee.greeting {
+  width: 300px;
+  margin: 4px 0 4px 15px;
+  padding: 3px;
+  border: 1px dashed rgba(0,0,0,0.3);
+  border-radius: 20px;
+  span{
+    font-size: 18px;
+    font-weight: 700;
+  }
 }
 .list-wrapper {
   position: relative;
@@ -147,9 +160,13 @@ export default {
   }
 }
 .title-task {
-  font-size: 14px;
+  text-indent: 15px;
   span {
     font-size: 18px;
   }
+}
+.title-task.no-task{
+  color: #66b79b;
+  font-weight: 700;
 }
 </style>
